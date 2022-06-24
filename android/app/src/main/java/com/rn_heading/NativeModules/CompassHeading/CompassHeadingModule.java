@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
@@ -133,15 +134,7 @@ public class CompassHeadingModule extends ReactContextBaseJavaModule implements 
                 int newAzimuth = (int) Math.toDegrees(orientation[0]);
                 newAzimuth = (newAzimuth + 360) % 360;
 
-                Display disp = null;
-                if (android.os.Build.VERSION.SDK_INT >= 30) {
-                    Activity activity = getReactApplicationContext().getCurrentActivity();
-                    if (activity != null) {
-                        disp = activity.getCurrentFocus().getDisplay();
-                    }
-                } else {
-                    disp = (((WindowManager) mApplicationContext.getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay();
-                }
+                Display disp = (((WindowManager) mApplicationContext.getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay();
 
                 if (disp != null) {
                     int rotation = disp.getRotation();
